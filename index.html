@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tasavvuf II Notları</title>
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="ikon.png">
+    <link rel="apple-touch-icon" href="ikon.png">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --bg-color: #0d0d0d;
+            --card-bg: #181818;
+            --text-color: #cecece;
+            --fosfor-kirmizi: rgba(255, 68, 68, 0.35);
+            --fosfor-sari: rgba(255, 215, 0, 0.3);
+            --fosfor-mavi: rgba(0, 176, 255, 0.25);
+            --border-color: #262626;
+            --drawer-width: 260px;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0 15px 20px 15px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header { 
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(13, 13, 13, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 15px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 25px;
+            width: 100vw; display: flex; align-items: center; justify-content: center;
+        }
+
+        .menu-btn {
+            position: absolute; left: 15px; z-index: 1001;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color);
+            border-radius: 8px; padding: 6px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        .side-drawer {
+            position: fixed; top: 0; left: calc(-1 * var(--drawer-width));
+            width: var(--drawer-width); height: 100%;
+            background: #121212; border-right: 1px solid var(--border-color);
+            z-index: 1002; transition: 0.3s ease-in-out;
+            padding: 60px 20px; box-sizing: border-box;
+            overflow-y: auto;
+        }
+        
+        .side-drawer.open { left: 0; }
+        
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); z-index: 1001;
+            display: none; backdrop-filter: blur(4px);
+        }
+        
+        .drawer-overlay.show { display: block; }
+        
+        .menu-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 15px; border-radius: 10px;
+            color: #fff; text-decoration: none;
+            font-size: 0.85rem; margin-bottom: 10px;
+            transition: background 0.2s; border: 1px solid transparent;
+            font-weight: 500;
+        }
+        
+        .menu-item:hover { background: #1a1a1a; border-color: var(--border-color); }
+        .menu-item svg { width: 20px; height: 20px; stroke: #fff; fill: none; }
+
+        .active-link-special {
+            background: linear-gradient(45deg, #1a1a1a, #4a3e1e);
+            border: 1px solid #7d6b30 !important;
+        }
+
+        .container { width: 100%; max-width: 500px; }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .header-title svg { width: 22px; height: 22px; fill: #888; flex-shrink: 0; }
+        .header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #fff;
+            letter-spacing: 2px;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.2rem;
+            margin: 0 0 15px 0;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        .f-red { background-color: var(--fosfor-kirmizi); padding: 0 3px; border-radius: 2px; color: #ff8a8a; }
+        .f-yellow { background-color: var(--fosfor-sari); padding: 0 3px; border-radius: 2px; color: #ffe57f; }
+        .f-blue { background-color: var(--fosfor-mavi); padding: 0 3px; border-radius: 2px; color: #80d8ff; }
+
+        .info-group { margin-bottom: 12px; }
+        .label { display: block; color: #666; font-size: 0.75rem; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
+        .content { display: block; font-size: 0.95rem; word-wrap: break-word; }
+
+        .destan-box {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 3px solid #7d6b30;
+        }
+        
+        .list-item {
+            display: block;
+            padding: 5px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #262626;
+        }
+        .list-item:last-child { border: none; }
+
+        .note-box {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed #444;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #aaa;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #222;
+            color: #7d6b30;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="side-drawer" id="drawer">
+    <a href="https://bilginsahiner.github.io/Ders-Programi/" class="menu-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+        Ders Programı
+    </a>
+    <a href="https://bilginsahiner.github.io/Ramazan-Programi/" class="menu-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+        Ramazan Programı
+    </a>
+    <a href="https://bilginsahiner.github.io/Vize-Takvimi/" class="menu-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Vize Takvimi
+    </a>
+    <a href="https://bilginsahiner.github.io/Final-Takvimi/" class="menu-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Final Takvimi
+    </a>
+    <a href="https://bilginsahiner.github.io/Tasavvuf-Metinleri/" class="menu-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        Tasavvuf Metinleri
+    </a>
+    <a href="https://bilginsahiner.github.io/Turk-Dusunce-Tarihi/" class="menu-item">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20"></path><path d="M2 12h20"></path><path d="M12 12l5 5"></path><path d="M12 12l-5 5"></path><path d="M12 12l5-5"></path><path d="M12 12l-5-5"></path></svg>
+        Türk Düşünce Tarihi
+    </a>
+
+<a href="https://bilginsahiner.github.io/Sistematik-Kelam-I/" class="menu-item">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+    Sistematik Kelam I
+</a>
+
+<a href="#" class="menu-item active-link-special" onclick="toggleMenu()">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+    Tasavvuf II
+</a>
+
+<a href="https://bilginsahiner.github.io/Osmanli-Turkcesi-Metin-Okumalari/" class="menu-item">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+    Osmanlı Türkçesi Metin Okumaları
+</a>
+
+<a href="https://bilginsahiner.github.io/Mantik-Yanlislari/" class="menu-item">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+    Mantık Yanlışları
+</a>
+
+<a href="https://bilginsahiner.github.io/Dinler-Tarihi-II/" class="menu-item">
+    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M12 2v20"></path><path d="M2 12h20"></path></svg>
+    Dinler Tarihi II
+</a>
+</div>
+
+<header>
+    <div class="menu-btn" onclick="toggleMenu()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+    </div>
+    <div class="header-title">
+        <svg viewBox="0 0 24 24"><path d="M12 3L1 9L12 15L21 10.09V17H23V9M5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z"/></svg>
+        <h1>Tasavvuf II</h1>
+    </div>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2>Hz. Ali</h2>
+        <div class="info-group">
+            <span class="list-item"><span class="f-yellow">İman</span> , <span class="f-yellow">tevhid</span> , <span class="f-yellow">marifet</span></span>
+            <span class="list-item"><span class="f-yellow">Dünyaya</span> gönül <span class="f-yellow">vermemiş</span></span>
+            <span class="list-item">Tasavvufta <span class="f-yellow">ilk</span> makamlardan bahseden</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Hulefây-ı Râşidîn Dünya Algısı</h2>
+        <div class="info-group">
+            <span class="list-item"><span class="f-yellow">Hz. Ebubekir</span> - Fakr-ı tam</span>
+            <span class="list-item"><span class="f-yellow">Hz. Ömer</span> - Malının yarısını ailesine , yarısını ihtiyaç sahiplerine</span>
+            <span class="list-item"><span class="f-yellow">Hz. Osman</span> - Allah için <span class="f-yellow">biriktirmiş</span> , Allah için biriktirdiğini <span class="f-yellow">infak etmiş</span></span>
+            <span class="list-item"><span class="f-yellow">Hz. Ali</span> - Dünyaya <span class="f-yellow">rağbet etmemiş</span> , dünya onun peşine <span class="f-yellow">gitmiştir</span></span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Ashâb-ı Suffe'nin Zühd Hayatı</h2>
+        <div class="info-group">
+            <span class="list-item">Sayıları 70 ile 300 arasında</span>
+            <span class="list-item">Medrese ve tekkenin temelini teşkil ediyorlar</span>
+            <span class="list-item">Ensar ve muhacirden çoğu fakir , yetim kimselerdi</span>
+            <span class="list-item"><span class="f-yellow">Haklarında 3 ayet inmiştir</span></span>
+            <div class="destan-box">
+                <span class="label" style="color:#7d6b30">Dikkat Çekenler</span>
+                <span class="list-item"><span class="f-blue">Bilâl-i Habeşî</span></span>
+                <span class="list-item"><span class="f-blue">Habbâb b. Eret</span></span>
+                <span class="list-item"><span class="f-blue">Suheyb bin Rûmî</span></span>
+                <span class="list-item"><span class="f-blue">Ebu Musa el-Eşarî</span></span>
+                <span class="list-item"><span class="f-blue">Ebu Zer el-Gıfârî</span></span>
+                <span class="list-item"><span class="f-blue">Mus'ab b. Umeyr</span></span>
+            </div>
+            <div class="note-box">
+                <span style="font-style: italic; font-weight: 500;">* Ashâb-ı suffe peygamberin öğrencileridir *</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Tarikatların Gelişim Seyri</h2>
+        <div class="info-group">
+            <span class="list-item">1. <span class="f-yellow">Hz. Peygamber</span></span>
+            <span class="list-item">2. <span class="f-yellow">Ashâb-ı Suffe</span></span>
+            <span class="list-item">3. <span class="f-yellow">Zühd mektepleri</span></span>
+            <span class="list-item">4. <span class="f-yellow">Tasavvuf mektepleri</span></span>
+            <span class="list-item">5. <span class="f-yellow">Tasavvuf yolları</span></span>
+            <span class="list-item">6. <span class="f-yellow">Tarikatlar</span></span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Tâbiîn Dönemi Zühd Hayatı</h2>
+        <div class="info-group">
+            <span class="list-item"><span class="f-red">Hilyetü'l Evliya</span> , <span class="f-red">Sıfatü's-Safve</span> (200 zahid tâbiî)</span>
+            <span class="list-item"><span class="f-red">et-Taarruf</span> , <span class="f-red">Keşfü'l-Mahcûb</span> (4'er zahid tâbiî)</span>
+            <span class="list-item"><span class="f-red">Tabakâtü'l-Kübrâ</span> (60 zahid tâbiî)</span>
+            <span class="list-item"><span class="f-red">Tezkiretü'l Evliya</span> (2 zahid tâbiî)</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Üveys el-Karânî</h2>
+        <div class="info-group">
+            <span class="list-item"><span class="f-yellow">Zâhid</span> , <span class="f-yellow">Fakr</span> , <span class="f-yellow">İbadet</span></span>
+            <span class="list-item"><span class="f-yellow">Peygamberin hırkasına Mazhar</span></span>
+            <span class="list-item"><span class="f-blue">Üveysî Meşrep</span> <span class="f-blue">(Bir Kamil mürşidle rüya ve manevi yol ile görüşmeye üveysi meşrep adı veriliyor.)</span></span>
+            <span class="list-item">Tâbiîn neslinin <span class="f-yellow">en hayırlısı</span></span>
+            <span class="list-item"><span class="f-red">Muhadramûn</span> : <span class="f-yellow">Peygamberi görme şerefine nail olamamış kimselere denir.</span></span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Ömer Bin Abdülaziz</h2>
+        <div class="info-group">
+            <span class="list-item"><span class="f-yellow">Zâhid</span> , <span class="f-yellow">Âbid</span> , <span class="f-yellow">Âdil</span></span>
+            <span class="list-item"><span class="f-yellow">İkinci asrın müceddidi</span></span>
+            <span class="list-item">Varlık içerisinde mütevazı hayatı <span class="f-yellow">Üveys el-Karânî</span>'nin <span class="f-yellow">fakirliğinden değerli görülmüştür</span>.</span>
+        </div>
+        <div class="destan-box" style="text-align: center;">
+            <span class="content" style="color:#fff; font-size: 1rem; margin-bottom: 5px;">"سِيرُوا تَصِحُّوا" - "صُومُوا تَصِحُّوا"</span>
+            <span class="content" style="font-style: italic; font-size: 0.9rem;">"Yürürsen sıhhatli <span class="f-yellow">olursun</span> . Oruç tutarsan sıhhatli <span class="f-yellow">olursun</span> ."</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Zühd Mektepleri</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mektep</th>
+                    <th>Şahıslar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="f-red">Medine</span><br><span class="f-blue">(Sünnet)</span></td>
+                    <td>
+                        <span class="f-yellow">Hz. Peygamber</span><br>
+                        <span class="f-yellow">Ashâb-ı Kirâm</span><br>
+                        <span class="f-yellow">Ashâb-ı Suffe</span><br>
+                        <span class="f-yellow">Saîd b. Müseyyeb</span><br>
+                        <span class="f-yellow">İmam Malik</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="f-red">Kûfe</span><br><span class="f-blue">(Sufilik)</span></td>
+                    <td>
+                        <span class="f-yellow">Ebu Hâşim el-Kûfî</span><br>
+                        <span class="f-yellow">Câbir b. Hayyân</span><br>
+                        <span class="f-yellow">Davud-ı Tâî</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="f-red">Basra</span><br><span class="f-blue">(Korku , Hüzün , Sevgi)</span></td>
+                    <td>
+                        <span class="f-yellow">Hasan-ı Basrî</span><br>
+                        <span class="f-yellow">Râbiatü'l-Adeviyye</span><br>
+                        <span class="f-yellow">Habib-i Acemî</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="f-red">Horasan</span><br><span class="f-blue">(Tevekkül)</span></td>
+                    <td>
+                        <span class="f-yellow">İbrahim Ethem</span><br>
+                        <span class="f-yellow">Şakîk-i Belhî</span><br>
+                        <span class="f-yellow">Ma'ruf-i Kerhî</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    function toggleMenu() {
+        const drawer = document.getElementById('drawer');
+        const overlay = document.getElementById('overlay');
+        drawer.classList.toggle('open');
+        overlay.classList.toggle('show');
+    }
+</script>
+
+</body>
+</html>
