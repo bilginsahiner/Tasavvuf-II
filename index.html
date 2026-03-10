@@ -20,6 +20,7 @@
 
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Inter:wght@300;400;600&display=swap');
 
+        /* Varsayılan Karanlık Tema Değişkenleri */
         :root {
             --bg-color: #0d0d0d;
             --card-bg: #181818;
@@ -29,6 +30,29 @@
             --fosfor-mavi: rgba(0, 176, 255, 0.25);
             --border-color: #262626;
             --drawer-width: 260px;
+            --header-bg: rgba(13, 13, 13, 0.85);
+            --title-color: #fff;
+            --accent-color: #7d6b30;
+            --table-head-bg: #222;
+            --destan-bg: #1e1e1e;
+        }
+
+        /* Aydınlık Tema Modu */
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-color: #f8f8f8;
+                --card-bg: #ffffff;
+                --text-color: #333333;
+                --fosfor-kirmizi: rgba(255, 68, 68, 0.15);
+                --fosfor-sari: rgba(255, 215, 0, 0.2);
+                --fosfor-mavi: rgba(0, 176, 255, 0.15);
+                --border-color: #e0e0e0;
+                --header-bg: rgba(248, 248, 248, 0.85);
+                --title-color: #1d1d1f;
+                --accent-color: #967d38;
+                --table-head-bg: #f0f0f0;
+                --destan-bg: #f9f6f0;
+            }
         }
 
         * { box-sizing: border-box; }
@@ -42,18 +66,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         header { 
             position: sticky; top: 0; z-index: 1000;
-            background: rgba(13, 13, 13, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: var(--header-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             padding: 15px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 25px;
             width: 100vw; display: flex; align-items: center; justify-content: center;
         }
 
         .menu-btn {
             position: absolute; left: 15px; z-index: 1001;
-            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color);
+            background: rgba(128, 128, 128, 0.05); border: 1px solid var(--border-color);
             border-radius: 8px; padding: 6px; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
         }
@@ -61,7 +86,7 @@
         .side-drawer {
             position: fixed; top: 0; left: calc(-1 * var(--drawer-width));
             width: var(--drawer-width); height: 100%;
-            background: #121212; border-right: 1px solid var(--border-color);
+            background: var(--card-bg); border-right: 1px solid var(--border-color);
             z-index: 1002; transition: 0.3s ease-in-out;
             padding: 60px 20px; box-sizing: border-box;
             overflow-y: auto;
@@ -71,7 +96,7 @@
         
         .drawer-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7); z-index: 1001;
+            background: rgba(0,0,0,0.5); z-index: 1001;
             display: none; backdrop-filter: blur(4px);
         }
         
@@ -80,18 +105,18 @@
         .menu-item {
             display: flex; align-items: center; gap: 12px;
             padding: 15px; border-radius: 10px;
-            color: #fff; text-decoration: none;
+            color: var(--text-color); text-decoration: none;
             font-size: 0.85rem; margin-bottom: 10px;
             transition: background 0.2s; border: 1px solid transparent;
             font-weight: 500;
         }
         
-        .menu-item:hover { background: #1a1a1a; border-color: var(--border-color); }
-        .menu-item svg { width: 20px; height: 20px; stroke: #fff; fill: none; }
+        .menu-item:hover { background: rgba(128, 128, 128, 0.1); border-color: var(--border-color); }
+        .menu-item svg { width: 20px; height: 20px; stroke: currentColor; fill: none; }
 
         .active-link-special {
-            background: linear-gradient(45deg, #1a1a1a, #4a3e1e);
-            border: 1px solid #7d6b30 !important;
+            background: linear-gradient(45deg, var(--card-bg), #4a3e1e);
+            border: 1px solid var(--accent-color) !important;
         }
 
         .container { width: 100%; max-width: 500px; }
@@ -106,7 +131,7 @@
         .header-title h1 {
             font-family: 'Playfair Display', serif;
             font-size: 1.1rem;
-            color: #fff;
+            color: var(--title-color);
             letter-spacing: 2px;
             margin: 0;
             text-transform: uppercase;
@@ -119,50 +144,51 @@
             padding: 20px;
             margin-bottom: 20px;
             width: 100%;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         h2 {
             font-family: 'Playfair Display', serif;
-            color: #fff;
+            color: var(--title-color);
             font-size: 1.2rem;
             margin: 0 0 15px 0;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 8px;
         }
 
-        .f-red { background-color: var(--fosfor-kirmizi); padding: 0 3px; border-radius: 2px; color: #ff8a8a; }
-        .f-yellow { background-color: var(--fosfor-sari); padding: 0 3px; border-radius: 2px; color: #ffe57f; }
-        .f-blue { background-color: var(--fosfor-mavi); padding: 0 3px; border-radius: 2px; color: #80d8ff; }
+        .f-red { background-color: var(--fosfor-kirmizi); padding: 0 3px; border-radius: 2px; color: #ff5e5e; }
+        .f-yellow { background-color: var(--fosfor-sari); padding: 0 3px; border-radius: 2px; color: #b8860b; }
+        .f-blue { background-color: var(--fosfor-mavi); padding: 0 3px; border-radius: 2px; color: #0091ea; }
 
         .info-group { margin-bottom: 12px; }
-        .label { display: block; color: #666; font-size: 0.75rem; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
+        .label { display: block; color: #888; font-size: 0.75rem; text-transform: uppercase; font-weight: 600; margin-bottom: 2px; }
         .content { display: block; font-size: 0.95rem; word-wrap: break-word; }
 
         .destan-box {
-            background: #1e1e1e;
+            background: var(--destan-bg);
             padding: 15px;
             border-radius: 8px;
             margin-top: 10px;
-            border-left: 3px solid #7d6b30;
+            border-left: 3px solid var(--accent-color);
         }
         
         .list-item {
             display: block;
             padding: 5px 0;
             font-size: 0.9rem;
-            border-bottom: 1px solid #262626;
+            border-bottom: 1px solid var(--border-color);
         }
         .list-item:last-child { border: none; }
 
         .note-box {
             margin-top: 15px;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px dashed #444;
+            background: rgba(128, 128, 128, 0.05);
+            border: 1px dashed #666;
             border-radius: 6px;
             font-size: 0.8rem;
             text-align: center;
-            color: #aaa;
+            color: #888;
         }
 
         table {
@@ -170,9 +196,10 @@
             border-collapse: collapse;
             margin-top: 10px;
             font-size: 0.85rem;
-            background: #1a1a1a;
+            background: var(--card-bg);
             border-radius: 8px;
             overflow: hidden;
+            transition: background-color 0.3s;
         }
         th, td {
             border: 1px solid var(--border-color);
@@ -181,8 +208,8 @@
             vertical-align: top;
         }
         th {
-            background-color: #222;
-            color: #7d6b30;
+            background-color: var(--table-head-bg);
+            color: var(--accent-color);
             text-transform: uppercase;
             font-size: 0.7rem;
             letter-spacing: 1px;
@@ -199,7 +226,7 @@
             align-items: center;
             gap: 8px;
             background: rgba(98, 70, 234, 0.1);
-            color: #ffffff;
+            color: var(--text-color);
             text-decoration: none;
             padding: 6px 14px;
             border-radius: 50px;
@@ -216,7 +243,8 @@
             transform: scale(0.95);
         }
 
-        .schedule-btn-small svg { color: #a29bfe; width: 14px; height: 14px; }
+        .schedule-btn-small svg { color: #6246ea; width: 14px; height: 14px; }
+        .arapca { font-size: 1.2rem; color: var(--title-color); font-family: 'Playfair Display', serif; }
     </style>
 </head>
 <body>
@@ -277,7 +305,7 @@
 
 <header>
         <div class="menu-btn" onclick="toggleMenu()" style="background: transparent; border: none; padding: 0;">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -318,7 +346,7 @@
             <span class="list-item">Ensar ve muhacirden çoğu fakir , yetim kimselerdi</span>
             <span class="list-item"><span class="f-yellow">Haklarında 3 ayet inmiştir</span></span>
             <div class="destan-box">
-                <span class="label" style="color:#7d6b30">Dikkat Çekenler</span>
+                <span class="label" style="color:var(--accent-color)">Dikkat Çekenler</span>
                 <span class="list-item"><span class="f-blue">Bilâl-i Habeşî</span></span>
                 <span class="list-item"><span class="f-blue">Habbâb b. Eret</span></span>
                 <span class="list-item"><span class="f-blue">Suheyb bin Rûmî</span></span>
@@ -373,7 +401,7 @@
             <span class="list-item">Varlık içerisinde mütevazı hayatı <span class="f-yellow">Üveys el-Karânî</span>'nin <span class="f-yellow">fakirliğinden değerli görülmüştür</span>.</span>
         </div>
         <div class="destan-box" style="text-align: center;">
-            <span class="content" style="color:#fff; font-size: 1rem; margin-bottom: 5px;">"سِيرُوا تَصِحُّوا" - "صُومُوا تَصِحُّوا"</span>
+            <span class="arapca" style="display:block; margin-bottom: 5px;">"سِيرُوا تَصِحُّوا" - "صُومُوا تَصِحُّوا"</span>
             <span class="content" style="font-style: italic; font-size: 0.9rem;">"Yürürsen sıhhatli <span class="f-yellow">olursun</span> . Oruç tutarsan sıhhatli <span class="f-yellow">olursun</span> ."</span>
         </div>
     </div>
@@ -441,7 +469,7 @@
             <span class="list-item">Hicri 3 - 4 - 5 / Miladi 9 - 10 - 11. Asırlar</span>
             
             <div class="destan-box">
-                <span class="label" style="color:#7d6b30">Öne Çıkan Gelişmeler</span>
+                <span class="label" style="color:var(--accent-color)">Öne Çıkan Gelişmeler</span>
                 <span class="list-item">Abbasilerin yükseliş dönemi.</span>
                 <span class="list-item">İtikadi ve ameli mezhepler kurulmuştur.</span>
                 <span class="list-item">Tasavvuf klasikleri ve <span class="f-yellow">Tabakat kitapları</span> yazılmıştır.</span>
