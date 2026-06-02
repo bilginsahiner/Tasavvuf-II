@@ -1040,5 +1040,15 @@
     }
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.card').forEach(function(card) {
+        // Sayfadaki tüm $\rightarrow$ ifadelerini otomatik olarak şık bir oka dönüştürür
+        card.innerHTML = card.innerHTML.replace(/\$\\rightarrow\$/g, '→');
+    });
+});
+</script>
+
+
 </body>
 </html>
